@@ -1,18 +1,18 @@
 # Student Score Prediction
 
-This repository contains the implementation of a  machine learning project focused on predicting student exam scores using the Student Performance Factors dataset from Kaggle (https://www.kaggle.com/datasets/lainguyn123/student-performance-factors). The project demonstrates data cleaning, visualization, and modeling techniques, including linear regression, polynomial regression, and feature experimentation.
+This repository contains the implementation of a machine learning project focused on predicting student exam scores using the Student Performance Factors dataset from Kaggle (https://www.kaggle.com/datasets/lainguyn123/student-performance-factors). The project demonstrates advanced data cleaning, visualization, and modeling techniques, including linear regression, polynomial regression, and feature experimentation with categorical encoding.
 
 ## Project Overview
 
 **Task**: Build a predictive model for student exam scores based on study hours and other features.  
 **Dataset**: StudentPerformanceFactors.csv (sourced from Kaggle, not included in the repository due to size).  
 **Objectives**:  
-- Clean and preprocess the dataset.  
-- Visualize relationships between features (e.g., Hours Studied vs. Exam Score).  
+- Clean and preprocess the dataset, including handling missing values with imputation.  
+- Visualize relationships between features (e.g., Hours Studied vs. Exam Score) with enhanced plots.  
 - Train a linear regression model to predict exam scores.  
-- Evaluate model performance using Mean Squared Error (MSE) and R-squared score.  
-- Implement polynomial regression and compare performance.  
-- Experiment with different feature combinations to improve predictions.  
+- Evaluate model performance using Mean Squared Error (MSE), R-squared (R²), Mean Absolute Error (MAE), and 5-fold cross-validation.  
+- Implement polynomial regression (degrees 2 and 3) and compare performance.  
+- Experiment with different feature combinations, including encoded categorical variables, to improve predictions.  
 
 **Tools and Libraries**:  
 - Python 3.8+  
@@ -26,16 +26,17 @@ This repository contains the implementation of a  machine learning project focus
 ```
 student-score-prediction/
 ├── notebooks/
-│   └── student_score_prediction.ipynb  # Kaggle notebook with code and documentation
+│   └── student_score_prediction.ipynb      # Kaggle notebook with code and documentation
 ├── plots/
-│   ├── exam_score_histogram.png        # Distribution of exam scores
-│   ├── hours_vs_score_scatter.png      # Hours studied vs. exam score
-│   ├── sleep_vs_score_boxplot.png      # Exam score by sleep hours
-│   ├── linear_predictions.png          # Linear regression predictions
-│   └── polynomial_predictions.png      # Polynomial regression fit
-├── requirements.txt                    # Python dependencies
-└── README.md                           # Project documentation (this file)
-
+│   ├── correlation_heatmap.png             # New: Correlation between numerical features
+│   ├── exam_score_histogram.png            # Distribution of exam scores
+│   ├── hours_vs_score_scatter.png          # Hours studied vs. exam score with trend line
+│   ├── sleep_vs_score_boxplot.png          # Exam score by sleep hours
+│   ├── linear_predictions.png              # Linear regression predictions
+│   └── polynomial_predictions_degree2.png  # Polynomial regression fit (degree 2)
+│   └── polynomial_predictions_degree3.png  # Polynomial regression fit (degree 3)
+├── requirements.txt                        # Python dependencies
+└── README.md                               # Project documentation (this file)
 ```
 
 ## Setup and Installation
@@ -47,8 +48,8 @@ student-score-prediction/
 - Kaggle Account: To access the dataset and public notebook.  
 
 ### Option 1: Run on Kaggle
-1. Visit the public Kaggle notebook: (https://www.kaggle.com/code/abdelrahmansalah2002/student-score-prediction)  
-2. Ensure the Student Performance Factors dataset is added to Kaggle.  
+1. Visit the public Kaggle notebook: (https://www.kaggle.com/code/abdelrahmansalah2002/student-score-prediction)
+2. Ensure the Student Performance Factors dataset is added to Kaggle.
 3. Click "Run All" to execute the notebook and view results, including visualizations saved to /kaggle/working/plots/.
 
 ### Option 2: Run Locally
@@ -86,40 +87,40 @@ scikit-learn==1.3.0
 ## Methodology
 1. **Data Loading and Cleaning**:  
    - Loaded the dataset using Pandas.  
-   - Removed duplicates and checked for missing values (none found).  
+   - Removed duplicates and imputed missing values (78 in Teacher_Quality, 90 in Parental_Education_Level, 67 in Distance_from_Home) with mode for categoricals and median for numerics.  
 
 2. **Data Visualization**:  
    - Histogram of exam scores to understand the target variable distribution.  
-   - Scatter plot of Hours Studied vs. Exam Score to explore relationships.  
+   - Scatter plot of Hours Studied vs. Exam Score with trend lines to explore relationships.  
    - Boxplot of Exam Score by Sleep Hours to investigate additional features.  
+   - Correlation heatmap to guide feature selection.  
    - Visualizations are displayed inline and saved to plots/.  
 
 3. **Modeling**:  
    - Linear Regression: Trained on Hours_Studied to predict Exam_Score.  
-   - Polynomial Regression: Applied degree-2 polynomial regression for non-linear patterns.  
-   - Feature Experimentation: Tested combinations like Hours_Studied, Sleep_Hours, Attendance, and Tutoring_Sessions.  
+   - Polynomial Regression: Applied degrees 2 and 3, but no significant improvement over linear.  
+   - Feature Experimentation: Tested combinations like Hours_Studied, Sleep_Hours, Attendance, and Tutoring_Sessions, enhanced with one-hot encoding of categorical variables (e.g., Parental_Involvement, Motivation_Level).  
 
 4. **Evaluation**:  
-   - Used MSE and R-squared to assess model performance.  
-   - Compared linear and polynomial regression, as well as multi-feature models, to the baseline.  
+   - Used MSE, R², MAE, and 5-fold cross-validation to assess model performance.  
+   - Compared linear, polynomial, and multi-feature models to the baseline.  
 
 5. **Outputs**:  
-   - Console: Dataset info, model metrics (MSE, R-squared), and comparisons.  
+   - Console: Dataset info, model metrics (MSE, R², MAE, CV R²), and comparisons.  
    - Plots: Saved in plots/ for distribution, relationships, and model predictions.  
 
 ## Results
-- **Linear Regression**: Baseline model using Hours_Studied.  
-- **Polynomial Regression**: Often improves MSE and R-squared by capturing non-linear trends.  
-- **Feature Experiments**: Including features like Attendance and Sleep_Hours typically enhances performance.  
-- **Visualizations**: Plots in plots/ illustrate data distributions, feature relationships, and model fits.  
+- **Linear Regression**: Baseline model using Hours_Studied (MSE 9.96, R² 0.25).  
+- **Polynomial Regression**: Degrees 2 and 3 show no improvement (MSE 9.97, R² 0.25).  
+- **Feature Experiments**: Including Attendance and encoded categoricals (e.g., Parental_Involvement) improves performance, with the best model (Hours_Studied, Sleep_Hours, Attendance, Tutoring_Sessions + encoding) achieving MSE 3.68, R² 0.72, MAE 1.06, CV R² 0.63 (±0.16).  
+- **Visualizations**: Plots in plots/ illustrate data distributions, feature relationships, and model fits, including the correlation heatmap.  
 
 See notebooks/student_score_prediction.ipynb for detailed outputs and metrics.
 
 ## Future Improvements
-- Encode categorical features (e.g., Parental_Involvement, Motivation_Level) using one-hot encoding.  
-- Experiment with additional models like Random Forest or XGBoost.  
+- Experiment with additional models like Random Forest or XGBoost for potentially higher accuracy.  
 - Perform feature selection to identify the most impactful predictors.  
-- Apply cross-validation for more robust model evaluation.  
+- Explore advanced imputation techniques or feature engineering for missing data.  
 
 ## Author
 Abdelrahman Mohamed Salah  
@@ -129,7 +130,3 @@ Kaggle: https://www.kaggle.com/abdelrahmansalah2002
 ## Acknowledgments
 - Dataset provided by Kaggle (https://www.kaggle.com/datasets/lainguyn123/student-performance-factors).  
 - Tools: Python, Pandas, Matplotlib, Seaborn, Scikit-learn.  
-
----
-
-
