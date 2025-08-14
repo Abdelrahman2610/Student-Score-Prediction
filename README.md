@@ -1,6 +1,6 @@
 # Student Score Prediction
 
-This repository contains the implementation of a  Machine Learning Project about student score prediction, focusing on predicting student exam scores using the Student Performance Factors dataset from Kaggle (https://www.kaggle.com/datasets/lainguyn123/student-performance-factors). The project demonstrates data cleaning, visualization, and modeling techniques, including linear regression, polynomial regression, and feature experimentation.
+This repository contains the implementation of a  machine learning project focused on predicting student exam scores using the Student Performance Factors dataset from Kaggle (https://www.kaggle.com/datasets/lainguyn123/student-performance-factors). The project demonstrates data cleaning, visualization, and modeling techniques, including linear regression, polynomial regression, and feature experimentation.
 
 ## Project Overview
 
@@ -47,8 +47,8 @@ student-score-prediction/
 - Kaggle Account: To access the dataset and public notebook.  
 
 ### Option 1: Run on Kaggle
-1. Visit the public Kaggle notebook:[My Kaggle Notebook]([https://www.kaggle.com/code/abdelrahmansalah2002/student-score-prediction])  
-2. Ensure the Student Performance Factors dataset is added in Kaggle.  
+1. Visit the public Kaggle notebook: (https://www.kaggle.com/code/abdelrahmansalah2002/student-score-prediction)  
+2. Ensure the Student Performance Factors dataset is added to Kaggle.  
 3. Click "Run All" to execute the notebook and view results, including visualizations saved to /kaggle/working/plots/.
 
 ### Option 2: Run Locally
